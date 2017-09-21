@@ -1,0 +1,7 @@
+.listings-grid__item {
+    border: solid 2px #fff;
+}
+
+.listings-grid__item.active {    
+    border-color: #e2e2e2;
+}
