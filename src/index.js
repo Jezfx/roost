@@ -6,3 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
+
+/*
+TODO: 
+- add scss or post css for vendor prefixes
+*/

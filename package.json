@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "accounting": "^0.4.1",
+    "prop-types": "^15.5.10",
     "react-scripts": "1.0.13"
   },
   "dependencies": {
+    "jump.js": "^1.0.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },

@@ -83,6 +83,18 @@ Author:         Rushan [http://bootstrapsale.com]
     vii.    SweetAlert
 
 --------------------------------------------------------------------*/
+
+#header, .action-header {
+  position: fixed;
+  width: 100%;
+  z-index: 10;  
+}
+
+#root {
+  padding-top: 160px;
+  z-index: 0;  
+}
+
 /*----------------------------
     1. Bootstrap
 -----------------------------*/
@@ -12999,7 +13011,7 @@ html:not(.ie9) .page-loader__spinner {
   clear: both;
 }
 #header-alt:before,
-#header-alt:after {
+-alt:after {
   content: " ";
   display: table;
 }
