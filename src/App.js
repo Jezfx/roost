@@ -70,10 +70,10 @@ class App extends Component {
     if( sortProperties !== 0 ) {
       
       if( sortProperties === 1 ) {
-        propertiesList.sort((a, b) => a.price - b.price);
+        propertiesList.sort((a, b) => b.price - a.price);
       } 
       else if ( sortProperties === 2 ) {
-        propertiesList.sort((a, b) => b.price - a.price);
+        propertiesList.sort((a, b) => a.price - b.price);
       }
     }
 
