@@ -57,11 +57,26 @@ class App extends Component {
   }
 
   updateSort(sort) {
-    console.log('sort');
+    this.setState({
+      sortProperties: parseInt( sort.target.value ),
+    })
   }
 
   render() {
-    const { properties, activeProperty } = this.state;
+    const { properties, activeProperty, sortProperties } = this.state;
+    let propertiesList = properties;
+
+    // Property Sort
+    if( sortProperties !== 0 ) {
+      
+      if( sortProperties === 1 ) {
+        propertiesList.sort((a, b) => a.price - b.price);
+      } 
+      else if ( sortProperties === 2 ) {
+        propertiesList.sort((a, b) => b.price - a.price);
+      }
+    }
+
     return (
       <div className="App">
 
@@ -80,7 +95,7 @@ class App extends Component {
 
           <div className={`properties-wrapper listings-${ this.state.propertyView }`}>
             <div className="row">
-              { properties && properties.map(( property ) => {
+              { propertiesList && properties.map(( property ) => {
                 return <Card 
                           key={ property._id } 
                           property={ property }

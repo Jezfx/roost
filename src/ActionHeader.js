@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import Proptypes from 'prop-types';
 
 export default class ActionHeader extends Component {
-  
-  hadelSort() {
-    console.log('hadeling sort');
-  }
-
   render() {
     const { propertyView, changePropertyView, updateSort } = this.props;
 
@@ -28,7 +23,7 @@ export default class ActionHeader extends Component {
               <div className="action-header__item action-header__item--sort hidden-xs">
                   <span className="action-header__small">Sort by :</span>
 
-                  <select onChange={ this.hadelSort } id="filterSort" name="filterSort" className="select2">
+                  <select onChange={ (e) => updateSort(e) } id="filterSort" name="filterSort">
                       <option value="1">Price hight to low</option>
                       <option value="2">Price low to high</option>
                   </select>
