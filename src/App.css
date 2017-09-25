@@ -5,13 +5,9 @@
   padding: 0;
 }
 
-.map-container,
-.listings-grid {
-  flex-basis: 50%;
+.properties-wrapper {
+  width: 100%;
+  padding-left: 51%;
+  padding-top: 20px;
 }
 
-.listings-grid {
-  overflow-y: scroll;
-  padding: 30px;
-  background: #fff;  
-}

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import GoogleMap from './GoogleMap.js';
+import ActionHeader from './ActionHeader.js'
 import Card from './Card.js';
 import data from './data/Data.js';
+import jump from 'jump.js'
+import { easeInOutCubic } from './utils/Easing.js';
 
 import './App.css';
 
@@ -12,20 +15,80 @@ class App extends Component {
 
     this.state = {
       properties: data.properties,
+      activeProperty: data.properties[0],
+      filterBedrooms: 'any',
+      filterBathrooms: 'any',
+      filterCars: 'any',
+      filterSort: 'any',
+      priceFrom: 'any',
+      priceTo: 'any',
+      showFilter: false,
+      filterProperties: [],
+      isFiltering: false,
+      propertyView: 'grid',
+      sortProperties: 0,
     }
+
+    this.setActiveProperty = this.setActiveProperty.bind(this);
+    this.changePropertyView = this.changePropertyView.bind(this);
+    this.updateSort = this.updateSort.bind(this);
+  }
+
+  changePropertyView(e, view) {
+    e.preventDefault();
+    
+    this.setState({
+      propertyView: view
+    });
+  }
+
+  setActiveProperty(property){
+    this.setState({
+      activeProperty: property
+    });
+
+    jump(`.id-${ property.index }`, {
+      duration: 1000,
+      offset: -235,
+      callback: undefined,
+      easing: easeInOutCubic,
+      a11y: false
+    })
+  }
+
+  updateSort(sort) {
+    console.log('sort');
   }
 
   render() {
-    const { properties } = this.state;
+    const { properties, activeProperty } = this.state;
     return (
       <div className="App">
+
+        <ActionHeader 
+          changePropertyView={ this.changePropertyView } 
+          propertyView={ this.state.propertyView }
+          updateSort={ this.updateSort } />
+
         <section className="section app-wrapper">
           <div className="map-container">
-            <GoogleMap />
+            <GoogleMap 
+              properties={properties} 
+              activeProperty={ activeProperty }
+              setActiveProperty={ this.setActiveProperty } />
           </div>
 
-          <div className="row listings-grid">
-            { properties && properties.map(( property ) => <Card /> ) }
+          <div className={`properties-wrapper listings-${ this.state.propertyView }`}>
+            <div className="row">
+              { properties && properties.map(( property ) => {
+                return <Card 
+                          key={ property._id } 
+                          property={ property }
+                          activeProperty={ activeProperty }
+                          setActiveProperty={ this.setActiveProperty }
+                          propertyView={ this.state.propertyView } />
+              } ) }              
+            </div>
           </div>
 
         </section>

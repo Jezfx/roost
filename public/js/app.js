@@ -388,13 +388,13 @@ $(document).ready(function () {
     /*--------------------------------------------
         Action Header Affix
     ---------------------------------------------*/
-    if($('.action-header')[0]) {
-        $('#header, .action-header').affix({
-            offset: {
-                top: $('.action-header').offset().top
-            }
-        });
-    }
+    // if($('.action-header')[0]) {
+    //     $('#header, .action-header').affix({
+    //         offset: {
+    //             top: $('.action-header').offset().top
+    //         }
+    //     });
+    // }
 
 
     /*--------------------------------------------
