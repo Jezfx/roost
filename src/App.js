@@ -32,6 +32,9 @@ class App extends Component {
     this.setActiveProperty = this.setActiveProperty.bind(this);
     this.changePropertyView = this.changePropertyView.bind(this);
     this.updateSort = this.updateSort.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
+    this.clearForm = this.clearForm.bind(this);
+    this.handelFilterChange = this.handelFilterChange.bind(this);
   }
 
   changePropertyView(e, view) {
@@ -62,8 +65,40 @@ class App extends Component {
     })
   }
 
+  toggleFilter(e) {
+    e.preventDefault();
+    
+    this.setState({
+      showFilter: !this.state.showFilter,
+    })
+  }
+
+  handelFilterChange(e) {
+    console.log(e.target.value);
+  }
+
+  clearForm(e, form) {
+    e.preventDefault();
+    const { properties } = this.state;
+
+    this.setState({
+      properties: this.state.properties.sort((a, b) => a.index - b.index),
+      activeProperty: properties[0],
+      filterBedrooms: 'any',
+      filterBathrooms: 'any',
+      filterCars: 'any',
+      filterSort: 'any',
+      priceFrom: 'any',
+      priceTo: 'any',
+      filterProperties: [],
+      isFiltering: false,      
+    });
+
+    form.reset();    
+  }
+
   render() {
-    const { properties, activeProperty, sortProperties } = this.state;
+    const { properties, activeProperty, sortProperties, showFilter } = this.state;
     let propertiesList = properties;
 
     // Property Sort
@@ -80,10 +115,15 @@ class App extends Component {
     return (
       <div className="App">
 
-        <ActionHeader 
+        <ActionHeader
+          showFilter={ showFilter }
           changePropertyView={ this.changePropertyView } 
           propertyView={ this.state.propertyView }
-          updateSort={ this.updateSort } />
+          updateSort={ this.updateSort }
+          clearForm={ this.clearForm } 
+          handelFilterChange={ this.handelFilterChange } 
+          showFilter={ this.state.showFilter } 
+          toggleFilter={ this.toggleFilter } />
 
         <section className="section app-wrapper">
           <div className="map-container">

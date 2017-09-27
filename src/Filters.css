@@ -1,0 +1,10 @@
+form.filter {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.filterBox {
+  flex-direction: column;
+  display: flex;
+  margin-left: 10px;
+}
