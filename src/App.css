@@ -11,3 +11,12 @@
   padding-top: 20px;
 }
 
+.nothing-found {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.nothing-found h1 {
+  align-self: center;
+}

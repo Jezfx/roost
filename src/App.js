@@ -26,12 +26,10 @@ class App extends Component {
       filterProperties: [],
       isFiltering: false,
       propertyView: 'grid',
-      sortProperties: 0,
     }
 
-    this.setActiveProperty = this.setActiveProperty.bind(this);
     this.changePropertyView = this.changePropertyView.bind(this);
-    this.updateSort = this.updateSort.bind(this);
+    this.setActiveProperty = this.setActiveProperty.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.handelFilterChange = this.handelFilterChange.bind(this);
@@ -45,25 +43,21 @@ class App extends Component {
     });
   }
 
-  setActiveProperty(property){
+  setActiveProperty(activeProperty, scroll = true) {
+    const { index } = activeProperty;
+
     this.setState({
-      activeProperty: property
+      activeProperty
     });
 
-    jump(`.id-${ property.index }`, {
-      duration: 1000,
-      offset: -235,
-      callback: undefined,
-      easing: easeInOutCubic,
-      a11y: false
-    })
-  }
-
-  updateSort(sort) {
-    this.setState({
-      sortProperties: parseInt( sort.target.value ),
-    })
-  }
+    if(scroll) {
+      const target = `#card-${index}`;
+      jump(target, {
+          duration: 800,
+          easing: easeInOutCubic
+      });      
+    }
+  }  
 
   toggleFilter(e) {
     e.preventDefault();
@@ -73,9 +67,44 @@ class App extends Component {
     })
   }
 
-  handelFilterChange(e) {
-    console.log(e.target.value);
+  filterProperties() {
+    const { properties, filterBedrooms, filterBathrooms, filterCars, priceFrom, priceTo } = this.state;
+    const isFiltering = filterBedrooms !== 'any' || filterBathrooms !== 'any' || filterCars !== 'any' || priceFrom !== 'any' || priceTo !== 'any';
+
+    const getFilteredProperties = ( properties ) => {
+      const filterProperties = [];
+      
+      properties.map( property => {
+        const { bedrooms, bathrooms, carSpaces, price } = property;
+        const match = 
+          (bedrooms === parseInt(filterBedrooms) || filterBedrooms === 'any') &&
+          (carSpaces === parseInt(filterCars) || filterCars === 'any') &&
+          (bathrooms === parseInt(filterBathrooms) || filterBathrooms === 'any') &&     
+          (price > parseInt(priceFrom) || priceFrom === 'any') &&
+          (price < parseInt(priceTo) || priceTo === 'any');
+
+        match && filterProperties.push( property );
+
+      });
+
+      return filterProperties;
+
+    }
+
+    this.setState({
+      filterProperties: getFilteredProperties(properties),
+      activeProperty: getFilteredProperties(properties)[0] || properties[0],
+      isFiltering,
+    })
   }
+
+  handelFilterChange(target) {
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    }, () => this.filterProperties());
+  }  
 
   clearForm(e, form) {
     e.preventDefault();
@@ -98,19 +127,12 @@ class App extends Component {
   }
 
   render() {
-    const { properties, activeProperty, sortProperties, showFilter } = this.state;
-    let propertiesList = properties;
-
-    // Property Sort
-    if( sortProperties !== 0 ) {
-      
-      if( sortProperties === 1 ) {
-        propertiesList.sort((a, b) => b.price - a.price);
-      } 
-      else if ( sortProperties === 2 ) {
-        propertiesList.sort((a, b) => a.price - b.price);
-      }
-    }
+    const { properties, activeProperty, sortProperties, showFilter, filterSort, filterProperties, isFiltering } = this.state;
+    const propertiesList = isFiltering ? filterProperties : properties;
+    const emptyFilterResults = isFiltering && propertiesList.length === 0;
+    
+    parseInt( filterSort ) === 0 && propertiesList.sort((a, b) => b.price - a.price);
+    parseInt( filterSort ) === 1 && propertiesList.sort((a, b) => a.price - b.price);
 
     return (
       <div className="App">
@@ -119,7 +141,7 @@ class App extends Component {
           showFilter={ showFilter }
           changePropertyView={ this.changePropertyView } 
           propertyView={ this.state.propertyView }
-          updateSort={ this.updateSort }
+          setActiveProperty={ this.setActiveProperty }
           clearForm={ this.clearForm } 
           handelFilterChange={ this.handelFilterChange } 
           showFilter={ this.state.showFilter } 
@@ -127,23 +149,30 @@ class App extends Component {
 
         <section className="section app-wrapper">
           <div className="map-container">
-            <GoogleMap 
-              properties={properties} 
-              activeProperty={ activeProperty }
-              setActiveProperty={ this.setActiveProperty } />
+            <GoogleMap
+            properties={ properties }
+            activeProperty={ activeProperty }
+            updateActiveCard={ this.updateActiveCard }
+            filterProperties={ filterProperties }
+            isFiltering={ isFiltering } />
           </div>
 
           <div className={`properties-wrapper listings-${ this.state.propertyView }`}>
-            <div className="row">
-              { propertiesList && properties.map(( property ) => {
-                return <Card 
-                          key={ property._id } 
-                          property={ property }
-                          activeProperty={ activeProperty }
-                          setActiveProperty={ this.setActiveProperty }
-                          propertyView={ this.state.propertyView } />
-              } ) }              
+            { emptyFilterResults 
+            ? <div className="row nothing-found">
+                <h1>Nothing found 👀</h1>
+              </div>
+            : <div className="row">
+                { propertiesList && propertiesList.map(( property ) => 
+                <Card 
+                  key={ property._id } 
+                  property={ property }
+                  activeProperty={ activeProperty }
+                  setActiveProperty={ this.setActiveProperty }
+                  propertyView={ this.state.propertyView } />
+                )}              
             </div>
+            }
           </div>
 
         </section>

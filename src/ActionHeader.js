@@ -5,7 +5,7 @@ import './ActionHeader.css'
 
 export default class ActionHeader extends Component {
   render() {
-    const { propertyView, changePropertyView, updateSort, showFilter, toggleFilter } = this.props;
+    const { propertyView, changePropertyView, setActiveProperty, showFilter, toggleFilter } = this.props;
 
     return (
       <div className="action-header">
@@ -31,7 +31,7 @@ export default class ActionHeader extends Component {
                 <div className="action-header__item action-header__item--sort hidden-xs">
                     <span className="action-header__small">Sort by :</span>
 
-                    <select onChange={ (e) => updateSort(e) } id="filterSort" name="filterSort">
+                    <select onChange={ (e) => setActiveProperty(e) } id="filterSort" name="filterSort">
                         <option value="1">Price hight to low</option>
                         <option value="2">Price low to high</option>
                     </select>
@@ -56,7 +56,7 @@ export default class ActionHeader extends Component {
 ActionHeader.propTypes = {
   changePropertyView: Proptypes.func.isRequired,
   propertyView: Proptypes.string.isRequired,
-  updateSort: Proptypes.func.isRequired,
+  setActiveProperty: Proptypes.func.isRequired,
   clearForm: Proptypes.func.isRequired,
   toggleFilter: Proptypes.func.isRequired,
   handelFilterChange: Proptypes.func.isRequired,

@@ -28,16 +28,16 @@ export default class GoogleMap extends Component {
     }
 
     componentDidUpdate(){      
-      const {filteredProperties, isFiltering} = this.props;
-      const {markers} = this.state;
+      const { filterProperties, isFiltering } = this.props;
+      const { markers } = this.state;
 
       markers.forEach(marker => {
-        const {property} = marker; //what is the associated property
+        const { property } = marker; //what is the associated property
 
-        if(isFiltering){
+        if( isFiltering ){
 
             // show markers of filtered properties
-            if(filteredProperties.includes(property)){
+            if(filterProperties.includes(property)){
 
                 markers[property.index].setVisible(true);
 
@@ -55,8 +55,8 @@ export default class GoogleMap extends Component {
       })
     }    
 
-    componentWillReceiveProps(nextProps){      
-      const {activeProperty} = nextProps;
+    componentWillReceiveProps(nextProps){
+      const { activeProperty,  filterProperties, isFiltering } = nextProps;
       const {latitude, longitude, index} = activeProperty;
 
       const {markers} = this.state;
@@ -65,8 +65,10 @@ export default class GoogleMap extends Component {
       this.hideAll();
 
       // show info window of new active property
-      this.showIW(index);
+      if( !isFiltering || isFiltering && filterProperties.length > 0 ) {
+        this.showIW(index);
       }
+    }
 
     // componentDidMount: function() {
     //     // Connect the initMap() function within this class to the global window context,

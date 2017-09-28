@@ -12,11 +12,11 @@ export default class Card extends Component {
   
   hanelClick( e, property ) {
     e.preventDefault();
-    this.props.setActiveProperty( property );
+    this.props.setActiveProperty( property, false );
   }
     render() {
 
-      const { price, picture, address, bedrooms, bathrooms, parking, _id, index } = this.props.property;
+      const { price, picture, address, bedrooms, bathrooms, carSpaces, _id, index } = this.props.property;
       const { setActiveProperty, propertyView, property } = this.props;
 
       return (
@@ -37,7 +37,7 @@ export default class Card extends Component {
                         <ul className="listings-grid__attrs">
                             <li><i className="listings-grid__icon listings-grid__icon--bed"></i> { bedrooms }</li>
                             <li><i className="listings-grid__icon listings-grid__icon--bath"></i> { bathrooms }</li>
-                            <li><i className="listings-grid__icon listings-grid__icon--parking"></i> { parking }</li>
+                            <li><i className="listings-grid__icon listings-grid__icon--parking"></i> { carSpaces }</li>
                         </ul>
                     </a>
 
@@ -68,7 +68,7 @@ export default class Card extends Component {
                           <ul className="listings-grid__attrs">
                           <li><i className="listings-grid__icon listings-grid__icon--bed"></i> { bedrooms }</li>
                           <li><i className="listings-grid__icon listings-grid__icon--bath"></i> { bathrooms }</li>
-                          <li><i className="listings-grid__icon listings-grid__icon--parking"></i> { parking }</li>
+                          <li><i className="listings-grid__icon listings-grid__icon--parking"></i> { carSpaces }</li>
                           </ul>
                       </div>
                   </a>
