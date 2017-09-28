@@ -22,38 +22,38 @@ export default class Card extends Component {
       return (
         <div>
           { propertyView === 'grid' &&
-            <div onClick={ (e) => this.hanelClick(e, property) } className={`col-sm-6 col-md-4 id-${ index }`}>
-                <div className={`listings-grid__item ${ _id === this.props.activeProperty._id ? 'listings-grid__item--active' : '' }`}>
-                    <a>
-                        <div className="listings-grid__main">
-                            <img src={ picture } alt="" />
-                            <div className="listings-grid__price">{ formatPrice( price ) }</div>
-                        </div>
+            <div 
+              onClick={ (e) => this.hanelClick(e, property) }
+              className={`listings-grid__item card-id-${ index } ${ _id === this.props.activeProperty._id ? 'listings-grid__item--active' : '' }`}>
+                <a>
+                    <div className="listings-grid__main">
+                        <img src={ picture } alt="" />
+                        <div className="listings-grid__price">{ formatPrice( price ) }</div>
+                    </div>
 
-                        <div className="listings-grid__body">
-                            <h5>{ address }</h5>
-                        </div>
+                    <div className="listings-grid__body">
+                        <h5>{ address }</h5>
+                    </div>
 
-                        <ul className="listings-grid__attrs">
-                            <li><i className="listings-grid__icon listings-grid__icon--bed"></i> { bedrooms }</li>
-                            <li><i className="listings-grid__icon listings-grid__icon--bath"></i> { bathrooms }</li>
-                            <li><i className="listings-grid__icon listings-grid__icon--parking"></i> { carSpaces }</li>
-                        </ul>
-                    </a>
+                    <ul className="listings-grid__attrs">
+                        <li><i className="listings-grid__icon listings-grid__icon--bed"></i> { bedrooms }</li>
+                        <li><i className="listings-grid__icon listings-grid__icon--bath"></i> { bathrooms }</li>
+                        <li><i className="listings-grid__icon listings-grid__icon--parking"></i> { carSpaces }</li>
+                    </ul>
+                </a>
 
-                    <div className="actions listings-grid__favorite">
-                        <div className="actions__toggle">
-                            <input type="checkbox" />
-                            <i className="zmdi zmdi-favorite-outline"></i>
-                            <i className="zmdi zmdi-favorite"></i>
-                        </div>
+                <div className="actions listings-grid__favorite">
+                    <div className="actions__toggle">
+                        <input type="checkbox" />
+                        <i className="zmdi zmdi-favorite-outline"></i>
+                        <i className="zmdi zmdi-favorite"></i>
                     </div>
                 </div>
-            </div>        
+            </div>
           }
 
           { propertyView === 'list' && 
-            <div onClick={ ( e ) => this.hanelClick(e, property) } className={`col-sm-12 id-${ index }`}>
+            <div onClick={ ( e ) => this.hanelClick(e, property) } className={`card-id-${ index }`}>
               <div className={`listings-grid__item ${ _id === this.props.activeProperty._id ? 'listings-grid__item--active' : '' }`}>
                   <a className="media">
                       <div className="listings-grid__main pull-left">

@@ -1,3 +1,24 @@
+.listings-wrapper {
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+  float: right;
+  padding-left: 10px;
+  padding-top: 20px;
+  justify-content: space-between;
+}
+
+
+.listings-wrapper > * {
+  flex-basis: 30.33%;
+  margin: 0 1%;
+}
+
+.listings-list .listings-wrapper > * {
+  flex-basis: 100%;
+  margin: 0 2%;
+} 
+
 .listings-grid__item {
     border: solid 2px #fff;
 }
@@ -10,6 +31,3 @@
     border-color: #115EFE;
 }
 
-/* .listings-grid__item img {
-    min-height: 170px;
-} */

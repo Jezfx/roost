@@ -51,10 +51,13 @@ class App extends Component {
     });
 
     if(scroll) {
-      const target = `#card-${index}`;
+      const target = `.card-id-${index}`;
       jump(target, {
-          duration: 800,
-          easing: easeInOutCubic
+          duration: 1000,
+          offset: -230,
+          callback: undefined,
+          a11y: false,
+          easing: easeInOutCubic,
       });      
     }
   }  
@@ -152,25 +155,25 @@ class App extends Component {
             <GoogleMap
             properties={ properties }
             activeProperty={ activeProperty }
-            updateActiveCard={ this.updateActiveCard }
+            setActiveProperty={ this.setActiveProperty }
             filterProperties={ filterProperties }
             isFiltering={ isFiltering } />
           </div>
 
-          <div className={`properties-wrapper listings-${ this.state.propertyView }`}>
+          <div>
             { emptyFilterResults 
-            ? <div className="row nothing-found">
-                <h1>Nothing found 👀</h1>
-              </div>
-            : <div className="row">
-                { propertiesList && propertiesList.map(( property ) => 
-                <Card 
-                  key={ property._id } 
-                  property={ property }
-                  activeProperty={ activeProperty }
-                  setActiveProperty={ this.setActiveProperty }
-                  propertyView={ this.state.propertyView } />
-                )}              
+            ? <div><h1>Nothing found 👀</h1></div>
+            : <div className={`properties-wrapper listings-${ this.state.propertyView }`}>
+                <div className="listings-wrapper">
+                  { propertiesList && propertiesList.map(( property ) => 
+                  <Card 
+                    key={ property._id } 
+                    property={ property }
+                    activeProperty={ activeProperty }
+                    setActiveProperty={ this.setActiveProperty }
+                    propertyView={ this.state.propertyView } />
+                  )}                    
+                </div>
             </div>
             }
           </div>
