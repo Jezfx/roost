@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import Proptypes from 'prop-types'
 import Filters from './Filters.js'
+import filter from './img/icons/filter.svg';
+import close from './img/icons/close.svg';
 import './ActionHeader.css'
 
 export default class ActionHeader extends Component {
   render() {
-    const { propertyView, changePropertyView, setActiveProperty, showFilter, toggleFilter } = this.props;
+    const { propertyView, changePropertyView, showFilter, toggleFilter, handelFilterChange } = this.props;
+    const filterIcon = showFilter ? close : filter;
 
     return (
       <div className="action-header">
@@ -13,14 +16,17 @@ export default class ActionHeader extends Component {
 
               <div className="action-header__sort">
                 <div className="action-header__item action-header__item--search">
-                    <form>
+                    <form className="form-control">
                         <input className="hidden-xs" type="text" placeholder="Search by neighborhood, city, zip or address..." />{/* <!-- For desktop --> */}
                         <input className="visible-xs" type="text" placeholder="Search..." />{/* <!-- For mobile --> */}
                     </form>
                 </div>
 
                 <div className="action-header__item action-header__views">
-                  <button onClick={ (e) => toggleFilter(e) } >{ showFilter ? 'close' : 'filter' }</button>
+                  
+                  <a className="action-header__filter-icon" onClick={ (e) => toggleFilter(e) } >
+                    <img width="18" src={filterIcon} alt="filter"/>
+                  </a>
                 </div>                 
 
                 <div className="action-header__item action-header__views hidden-xs">
@@ -31,10 +37,12 @@ export default class ActionHeader extends Component {
                 <div className="action-header__item action-header__item--sort hidden-xs">
                     <span className="action-header__small">Sort by :</span>
 
-                    <select onChange={ (e) => setActiveProperty(e) } id="filterSort" name="filterSort">
-                        <option value="1">Price hight to low</option>
-                        <option value="2">Price low to high</option>
-                    </select>
+                    <form className="form-control">
+                      <select onChange={ ( e ) => handelFilterChange( e.target ) } id="filterSort" name="filterSort" className="input-sm">
+                          <option value="1">Price high to low</option>
+                          <option value="2">Price low to high</option>
+                      </select>                      
+                    </form>
                 </div>                                               
               </div>
 
@@ -56,7 +64,6 @@ export default class ActionHeader extends Component {
 ActionHeader.propTypes = {
   changePropertyView: Proptypes.func.isRequired,
   propertyView: Proptypes.string.isRequired,
-  setActiveProperty: Proptypes.func.isRequired,
   clearForm: Proptypes.func.isRequired,
   toggleFilter: Proptypes.func.isRequired,
   handelFilterChange: Proptypes.func.isRequired,

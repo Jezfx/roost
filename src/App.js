@@ -14,25 +14,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-      properties: data.properties,
-      activeProperty: data.properties[0],
-      filterBedrooms: 'any',
-      filterBathrooms: 'any',
-      filterCars: 'any',
-      filterSort: 'any',
-      priceFrom: 'any',
-      priceTo: 'any',
-      showFilter: false,
+      activeProperty  : data.properties[0],
+      filterBathrooms : 'any',
+      filterBedrooms  : 'any',
+      filterCars      : 'any',
       filterProperties: [],
-      isFiltering: false,
-      propertyView: 'grid',
+      filterSort      : 'any',
+      isFiltering     : false,
+      priceFrom       : 'any',
+      priceTo         : 'any',
+      properties      : data.properties,
+      propertyView    : 'grid',
+      showFilter      : false,
     }
 
     this.changePropertyView = this.changePropertyView.bind(this);
-    this.setActiveProperty = this.setActiveProperty.bind(this);
-    this.toggleFilter = this.toggleFilter.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.handelFilterChange = this.handelFilterChange.bind(this);
+    this.setActiveProperty = this.setActiveProperty.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
   }
 
   changePropertyView(e, view) {
